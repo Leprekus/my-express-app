@@ -8,5 +8,15 @@
 <body>
     <h1>Hello World</h1>
 <script defer type='module'src="/main.js"></script>
+<script>
+    async function test () {
+        const res = await fetch('/api/test')
+        const data = await res.json() 
+        console.log({ data })
+        
+    }
+    function h () { alert('h') }
+</script>
+<button onclick="test()">test</button>
 </body>
 </html>

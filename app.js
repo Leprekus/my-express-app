@@ -1,13 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -19,15 +10,16 @@ const serveApiCall_1 = __importDefault(require("./src/lib/serveApiCall"));
 const app = (0, express_1.default)();
 // req, res, next params
 const cwd = process.cwd();
+//app.use('/api/auth', (req:, res) => {})
+//makes folders inside static available to the client
 app.use(express_1.default.static(path_1.default.join(cwd, 'src/static')));
+//intercepts requests from http://localhost:3000/api/*
 app.get('/api/*', (req, res) => {
-    const response = (() => __awaiter(void 0, void 0, void 0, function* () { return yield (0, serveApiCall_1.default)(req, res); }))();
+    const response = (0, serveApiCall_1.default)(req, res);
     response;
 });
+//intercepts routes
 app.get('*', (req, res) => {
     (0, serveStaticFiles_1.default)(req, res);
 });
-// app.get('/', (req: express.Request, res: express.Response) => {
-//     res.sendFile(indexFile)
-// })
 app.listen(3000);

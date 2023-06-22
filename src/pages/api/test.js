@@ -11,7 +11,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handler = void 0;
 const handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield create;
     return res.status(200).json({ message: 'hello' });
 });
 exports.handler = handler;

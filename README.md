@@ -15,7 +15,34 @@ When creating a data entity, express does the following:
 4. Model performs the actual database modification
 5. model sends back a response
 6. controller (express) returns a response to the client based on model's response
-7. 
+
+## Backend To-Do's
+
+1. Define models
+2. Create Methods to Perform CRUD Ops in models
+3. Data should be stored as JSON
+
+json structure:
+
+```json
+   user {
+       "username": "string",
+       "name": "string",
+       "bio": "string",
+       "profile picture": "id",
+       "posts": ["id", "id", "id", ],
+       "friends": ["id", "id", "id", ]
+   }
+```
+
+File Structure:
+
+```text
+    userId
+    |---user.json
+    |---profilePicture.png
+    |---posts/id.png
+```
 
 Backend Development: Start by building the backend infrastructure and APIs that will handle user authentication and token management. This includes creating routes and controllers for user registration, login, and token retrieval.
 

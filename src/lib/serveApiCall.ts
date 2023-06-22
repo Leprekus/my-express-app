@@ -11,6 +11,8 @@ export default async function serveApiCall ( req: express.Request, res: express.
         
         const module = await import(filePath)
 
+        console.log({ api: filePath })
+
         const handler = module.default || module.handler
         
         const response: Response = await handler(req, res)

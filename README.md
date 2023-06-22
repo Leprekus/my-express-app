@@ -42,7 +42,7 @@ File Structure:
     |---user.json
     |---profilePicture.png
     |---posts/id.png
-```
+   ```
 
 Backend Development: Start by building the backend infrastructure and APIs that will handle user authentication and token management. This includes creating routes and controllers for user registration, login, and token retrieval.
 

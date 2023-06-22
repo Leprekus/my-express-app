@@ -12,13 +12,13 @@ export default function serveStaticFiles ( req: express.Request, res: express.Re
 
   else filePath = path.join(cwd, req.path + '.html')
 
-  console.log({ filePath})
 
   fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {
       // If the file is not found or there's an error, send a fallback response
       res.status(404).send('404 Not Found');
-    } else {
+    } 
+    else {
       res.send(data);
     }
   });

@@ -13,7 +13,6 @@ function serveStaticFiles(req, res) {
         filePath = path_1.default.join(cwd, '/index.html'); // Assuming the files are HTML
     else
         filePath = path_1.default.join(cwd, req.path + '.html');
-    console.log({ filePath });
     fs_1.default.readFile(filePath, 'utf8', (err, data) => {
         if (err) {
             // If the file is not found or there's an error, send a fallback response

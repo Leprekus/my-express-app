@@ -5,6 +5,8 @@ export default async function middleware( req: express.Request, res: express.Res
 
     const pathname = req.path
 
+    if(pathname.includes('api')) return next()
+
     const user =  getUser()
 
     if(!user && !pathname.includes('login')) {

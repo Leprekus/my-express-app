@@ -6,6 +6,18 @@
     <title>Document</title>
 </head>
 <body>
+    <script>
+        async function test () {
+            
+            const res = await fetch('http://localhost:3000/api/test')
+            const data = await res.json()
+            console.log(data)
+            
+            
+        }
+        function h () { alert('h') }
+    </script>
     <h1>Login</h1>
+    <button onclick="test()">testl me</button>
 </body>
 </html>

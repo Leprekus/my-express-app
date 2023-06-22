@@ -1,7 +1,9 @@
 import express from 'express'
+import uid from '../../../db/lib/uid/uidGenerator'
 
 export const handler = async ( req: express.Request, res: express.Response ) => {
-    return res.status(200).json({ message: 'hello' })
+    const index = await uid()
+    return res.status(200).json({ message: index })
 }
 
 

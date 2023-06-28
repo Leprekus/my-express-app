@@ -1,15 +1,20 @@
 import express from 'express'
 import getUser from './src/lib/getUser'
 
+const route = {
+    exclude: ['/api', ],
+    protect: ['/', ],
+}
+
 export default async function middleware( req: express.Request, res: express.Response, next: express.NextFunction) {
 
     const pathname = req.path
 
-    if(pathname.includes('api')) return next()
-
+    if(route.exclude.some(path => path === pathname)) return next()
+    
     const user =  getUser()
-
-    if(!user && !pathname.includes('login')) {
+    
+    if(!user && route.protect.some(path => path === pathname)) {
 
        return res.redirect('/login')
 
@@ -17,3 +22,4 @@ export default async function middleware( req: express.Request, res: express.Res
 
     return next()
 }
+

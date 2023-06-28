@@ -13,13 +13,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const getUser_1 = __importDefault(require("./src/lib/getUser"));
+const route = {
+    exclude: ['/api',],
+    protect: ['/',],
+};
 function middleware(req, res, next) {
     return __awaiter(this, void 0, void 0, function* () {
         const pathname = req.path;
-        if (pathname.includes('api'))
+        if (route.exclude.some(path => path === pathname))
             return next();
         const user = (0, getUser_1.default)();
-        if (!user && !pathname.includes('login')) {
+        if (!user && route.protect.some(path => path === pathname)) {
             return res.redirect('/login');
         }
         return next();

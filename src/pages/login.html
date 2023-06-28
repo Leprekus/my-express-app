@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/global.css">
 </head>
 <body>
     <script>
@@ -17,7 +18,16 @@
         }
         function h () { alert('h') }
     </script>
-    <h1>Login</h1>
-    <button onclick="test()">testl me</button>
+    <form action="api/auth/login" class="flex flex-col w-96 h-96 mx-auto gap-2 ">
+        <input type="text" placeholder="email or username">
+        <input type="text" placeholder="password">
+        <button type="submit">Login</button>
+    </form>
+
+    <form action="api/auth/signup" class="flex flex-col w-96 h-96 mx-auto gap-2 ">
+        <input type="text" placeholder="email or username">
+        <input type="text" placeholder="password">
+        <button type="submit">Signup</button>
+    </form>
 </body>
 </html>

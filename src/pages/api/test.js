@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handler = void 0;
-const uidGenerator_1 = __importDefault(require("../../../db/lib/uid/uidGenerator"));
+const uidGenerator_1 = __importDefault(require("../../../server/lib/uid/uidGenerator"));
 const handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const index = yield (0, uidGenerator_1.default)();
     return res.status(200).json({ message: index });

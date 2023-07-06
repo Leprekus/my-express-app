@@ -19,8 +19,8 @@ export class BaseModel {
     get updatedAt() { return this._updatedAt }
 
 
-    read(filename: 'post' | 'user') {}
-    write(filename: 'post' | 'user') {}
+    get(filename: 'post' | 'user') {}
+    create(filename: 'post' | 'user') {}
     update(filename: 'post' | 'user') {}
     delete(filename: 'post' | 'user') {}
 }

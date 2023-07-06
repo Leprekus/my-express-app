@@ -4,6 +4,7 @@ import fs from 'fs'
 import serveStaticFiles from './src/lib/serveStaticFiles'
 import serveApiCall from './src/lib/serveApiCall'
 import middleware from './middleware'
+import bodyParser from 'body-parser'
 const app = express()
 
 // req, res, next params
@@ -12,12 +13,16 @@ const cwd = process.cwd()
 //makes folders inside static available to the client
 app.use(express.static(path.join(cwd, 'src/static')))
 
+app.use(bodyParser.urlencoded())
+
+app.use(bodyParser.json())
+
 app.use(middleware)
 
 //intercepts requests from http://localhost:3000/api/*
-app.get('/api/*',  (req: express.Request, res: express.Response) => {
+app.post('/api/auth/*',  async (req: express.Request, res: express.Response) => {
 
-    const response = serveApiCall(req, res)
+    const response = await serveApiCall(req, res)
     
     response
 })

@@ -3,7 +3,7 @@ import fs from 'fs'
 import { CWD } from '../../../src/utils/consts'
 
 export default function uid () {
-    const filename = CWD + '/db/lib/uid/indexRegister.txt'
+    const filename = CWD + '/db/entries/indexRegister.txt'
     
    //the actual error cannot leave db because it may contain sensitive information
    return new Promise((resolve, reject) => {

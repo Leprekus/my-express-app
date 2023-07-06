@@ -37,8 +37,7 @@ function serveApiCall(req, res) {
         const filePath = '../pages' + req.path;
         try {
             const module = yield Promise.resolve(`${filePath}`).then(s => __importStar(require(s)));
-            console.log({ api: filePath });
-            const handler = module.default || module.handler;
+            const handler = (yield module.default) || (yield module.handler);
             const response = yield handler(req, res);
             return response;
         }

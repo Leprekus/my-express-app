@@ -11,8 +11,8 @@ class BaseModel {
     get id() { return this._id; }
     get createdAt() { return this._createdAt; }
     get updatedAt() { return this._updatedAt; }
-    read(filename) { }
-    write(filename) { }
+    get(filename) { }
+    create(filename) { }
     update(filename) { }
     delete(filename) { }
 }

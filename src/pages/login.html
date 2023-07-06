@@ -16,18 +16,37 @@
             
             
         }
-        function h () { alert('h') }
+        async function signup(event) {
+            event.preventDefault()
+            const signup = await fetch('/api/auth/signup')
+            const data = await signup.json()
+            console.log({ data })
+        }
+
+        async function login(event) {
+            event.preventDefault()
+            const login= await fetch('/api/auth/login',{
+                method: 'POST', 
+                headers:{ 'content-type': 'application/json' },
+                body: JSON.stringify({
+                    username: 'john',
+                    password: '123abc'
+                })
+            })
+            const data = await  login.json()
+            console.log({ data })
+        }
     </script>
-    <form action="api/auth/login" class="flex flex-col w-96 h-96 mx-auto gap-2 ">
+    <form class="flex flex-col w-96 h-96 mx-auto gap-2 ">
         <input type="text" placeholder="email or username">
         <input type="text" placeholder="password">
-        <button type="submit">Login</button>
+        <button onclick="login(event)">Login</button>
     </form>
 
-    <form action="api/auth/signup" class="flex flex-col w-96 h-96 mx-auto gap-2 ">
+    <form class="flex flex-col w-96 h-96 mx-auto gap-2 ">
         <input type="text" placeholder="email or username">
         <input type="text" placeholder="password">
-        <button type="submit">Signup</button>
+        <button onclick="signup(event)">Signup</button>
     </form>
 </body>
 </html>

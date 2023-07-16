@@ -5,8 +5,8 @@ import { CWD } from '../utils/consts';
 
 export default async function serveApiCall ( req: express.Request, res: express.Response) {
 
-    const filePath = '../pages' + req.path
-    
+    const filePath = CWD + '/src/pages/' + req.path
+   
     try {
 
         const module = await import(filePath)

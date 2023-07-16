@@ -32,9 +32,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const consts_1 = require("../utils/consts");
 function serveApiCall(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const filePath = '../pages' + req.path;
+        const filePath = consts_1.CWD + '/src/pages/' + req.path;
         try {
             const module = yield Promise.resolve(`${filePath}`).then(s => __importStar(require(s)));
             const handler = (yield module.default) || (yield module.handler);

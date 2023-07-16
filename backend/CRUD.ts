@@ -52,13 +52,26 @@ export class CRUD {
 
         if(!this.validateSecret(secret)) return { ok: 401 }
 
-        const writeOperation = 'write user info to filesystem'
+        ////
+        try {
+            const userFilePath = this.dbPath + '/entries/users/' + username + '.json'
 
-        if(!writeOperation) return { ok: 500}
+            const data = JSON.stringify({ username, password })
 
-        return { 
-            user: 'user data',
-            ok: 200 
-        }
+            //returns undefined
+            fs.writeFileSync(userFilePath, data, 'utf-8');
+            
+            return {
+                ok: 200,
+            }
+        
+          } catch (err: any) {
+
+            return {
+                ok: 500
+            }
+          }
+        ////
+
     }
 }

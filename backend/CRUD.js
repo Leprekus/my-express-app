@@ -51,13 +51,22 @@ class CRUD {
         return __awaiter(this, void 0, void 0, function* () {
             if (!this.validateSecret(secret))
                 return { ok: 401 };
-            const writeOperation = 'write user info to filesystem';
-            if (!writeOperation)
-                return { ok: 500 };
-            return {
-                user: 'user data',
-                ok: 200
-            };
+            ////
+            try {
+                const userFilePath = this.dbPath + '/entries/users/' + username + '.json';
+                const data = JSON.stringify({ username, password });
+                //returns undefined
+                fs_1.default.writeFileSync(userFilePath, data, 'utf-8');
+                return {
+                    ok: 200,
+                };
+            }
+            catch (err) {
+                return {
+                    ok: 500
+                };
+            }
+            ////
         });
     }
 }

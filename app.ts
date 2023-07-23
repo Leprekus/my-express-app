@@ -5,6 +5,7 @@ import serveStaticFiles from './src/lib/serveStaticFiles'
 import serveApiCall from './src/lib/serveApiCall'
 import middleware from './middleware'
 import bodyParser from 'body-parser'
+import cookieParser from 'cookie-parser'
 const app = express()
 
 // req, res, next params
@@ -16,6 +17,8 @@ app.use(express.static(path.join(cwd, 'src/static')))
 app.use(bodyParser.urlencoded())
 
 app.use(bodyParser.json())
+
+app.use(cookieParser())
 
 app.use(middleware)
 

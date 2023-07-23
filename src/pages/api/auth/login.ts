@@ -1,6 +1,7 @@
 import express from 'express'
 import fetchToken from '../../../utils/fetchToken';
 import { api } from '../../../../backend/main';
+import { ICookieToken } from '../../../typings';
 
 export const handler = async ( req: express.Request, res: express.Response ) => {
   
@@ -15,17 +16,16 @@ export const handler = async ( req: express.Request, res: express.Response ) => 
   // console.log(username, password)
   const { username, password } = req?.body
 
-  const credentials = {
-    client_id: process.env.CLIENT_ID!,
-    client_secret: process.env.CLIENT_SECRET!
-}
-  const data = {
-    username, password, client_credentials: credentials
+  const cookieToken:ICookieToken = req.cookies?.token || null
+
+  if(!cookieToken) {
+
+    const token = await fetchToken(username, password)
+
+    res.cookie('token', token, { maxAge: 900000, httpOnly: true })
+    
   }
-
-  const user = await api.signIn(data)
-
-  console.log({ user })
- 
-  return res.status(200).json({ data: 'Login successful' })
+  
+  return cookieToken.ok ? res.redirect('/home') : 
+  res.status(cookieToken.status).json({ data: 'Failed to retrieve token' })
 }

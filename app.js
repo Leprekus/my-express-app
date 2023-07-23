@@ -18,6 +18,7 @@ const serveStaticFiles_1 = __importDefault(require("./src/lib/serveStaticFiles")
 const serveApiCall_1 = __importDefault(require("./src/lib/serveApiCall"));
 const middleware_1 = __importDefault(require("./middleware"));
 const body_parser_1 = __importDefault(require("body-parser"));
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const app = (0, express_1.default)();
 // req, res, next params
 const cwd = process.cwd();
@@ -25,6 +26,7 @@ const cwd = process.cwd();
 app.use(express_1.default.static(path_1.default.join(cwd, 'src/static')));
 app.use(body_parser_1.default.urlencoded());
 app.use(body_parser_1.default.json());
+app.use((0, cookie_parser_1.default)());
 app.use(middleware_1.default);
 //intercepts requests from http://localhost:3000/api/*
 app.post('/api/auth/*', (req, res) => __awaiter(void 0, void 0, void 0, function* () {

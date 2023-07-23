@@ -9,13 +9,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-function fetchToken() {
+const main_1 = require("../../backend/main");
+function fetchToken(username, password) {
     return __awaiter(this, void 0, void 0, function* () {
-        const options = {
+        const credentials = {
             client_id: process.env.CLIENT_ID,
-            client_secret: process.env.CLIENT_SECRET,
+            client_secret: process.env.CLIENT_SECRET
         };
-        return options;
+        const data = {
+            username, password, client_credentials: credentials
+        };
+        const user = yield main_1.api.signIn(data);
+        return user;
     });
 }
 exports.default = fetchToken;

@@ -8,9 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.API = void 0;
 const CRUD_1 = require("./CRUD");
+const generateToken_1 = __importDefault(require("./lib/generateToken"));
+const writeToken_1 = __importDefault(require("./lib/writeToken"));
 class API {
     constructor() {
         this.crud = new CRUD_1.CRUD();
@@ -27,17 +32,8 @@ class API {
             return false;
         return true;
     }
-    getAccessToken(credentials) {
-        const { client_id, client_secret } = credentials;
-        if (client_id !== process.env.CLIENT_ID &&
-            client_secret !== process.env.CLIENT_SECRET)
-            return {
-                ok: false,
-                status: 404
-            };
-        const token = generateToken();
-    }
     getUser(data) {
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const { username, client_credentials } = data;
             if (!this.validateClientCredentials(client_credentials))
@@ -46,6 +42,7 @@ class API {
                     status: 401
                 };
             const user = yield this.crud.getUser(username, this.secret);
+            (_a = user.user) === null || _a === void 0 ? true : delete _a.password;
             return user;
         });
     }
@@ -60,6 +57,22 @@ class API {
             }
             const newUser = yield this.crud.createUser(username, password, this.secret);
             return newUser;
+        });
+    }
+    signIn(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { username, password, client_credentials } = data;
+            if (!this.validateClientCredentials(client_credentials))
+                return { ok: false, status: 401 };
+            const { user } = yield this.crud.getUser(username, this.secret);
+            if (password === (user === null || user === void 0 ? void 0 : user.password) &&
+                username === user.username) {
+                user === null || user === void 0 ? true : delete user.password;
+                const access_token = (0, generateToken_1.default)();
+                const token = (0, writeToken_1.default)(access_token, user);
+                return token;
+            }
+            return { ok: false, status: 401 };
         });
     }
     getPost() { return 0; }

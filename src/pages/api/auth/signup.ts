@@ -13,7 +13,6 @@ export const handler = async ( req: express.Request, res: express.Response ) => 
 
   const user = await api.getUser({ username, client_credentials: credentials })
 
- console.log({ status: user.status})
   switch(user.status) {
     case 200:
       return res.status(409).json({ data: 'User already exists' })

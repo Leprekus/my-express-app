@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handler = void 0;
+const main_1 = require("../../../../backend/main");
 const handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // const cookieToken = req.cookies?.token
     // if(req.cookies?.token) return res.status(200).json({ token: cookieToken })
@@ -18,7 +19,15 @@ const handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // const { username, password } = req?.body
     // console.log(username, password)
     const { username, password } = req === null || req === void 0 ? void 0 : req.body;
-    const user = yield ap;
-    return newCookieToken.status(200).json({ token });
+    const credentials = {
+        client_id: process.env.CLIENT_ID,
+        client_secret: process.env.CLIENT_SECRET
+    };
+    const data = {
+        username, password, client_credentials: credentials
+    };
+    const user = yield main_1.api.signIn(data);
+    console.log({ user });
+    return res.status(200).json({ data: 'Login successful' });
 });
 exports.handler = handler;

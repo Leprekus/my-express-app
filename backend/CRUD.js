@@ -28,7 +28,8 @@ class CRUD {
             /////
             try {
                 const userFilePath = this.dbPath + '/entries/users/' + username + '.json';
-                const user = fs_1.default.readFileSync(userFilePath, 'utf-8');
+                const json = fs_1.default.readFileSync(userFilePath, 'utf-8');
+                const user = JSON.parse(json);
                 return {
                     user,
                     status: 200,

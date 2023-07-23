@@ -18,7 +18,6 @@ const handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         client_secret: process.env.CLIENT_SECRET
     };
     const user = yield main_1.api.getUser({ username, client_credentials: credentials });
-    console.log({ status: user.status });
     switch (user.status) {
         case 200:
             return res.status(409).json({ data: 'User already exists' });

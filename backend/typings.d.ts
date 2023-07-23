@@ -1,7 +1,18 @@
-export interface UserCall {
-    user?: User;
+interface IResponse {
     ok: boolean;
-    status: 401 | 500 | 200 | 404;
+    status: 401 | 500 | 200 | 404 | 409;
+}
+//remove password from here
+interface User {
+    username: string;
+    password?: string;
+}
+interface UserPrivate {
+    username: string;
+    password: string;
+}
+export interface UserCall extends IResponse {
+    user?: User;
 }
 
 export interface ErrnoException extends Error {
@@ -15,3 +26,10 @@ export interface ErrnoException extends Error {
     client_id: string,
     client_secret: string
 } 
+
+
+export interface IToken extends IResponse {
+    access_token?: string;
+    created_at?: number;
+    user?: User
+}

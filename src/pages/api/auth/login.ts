@@ -1,5 +1,6 @@
 import express from 'express'
 import fetchToken from '../../../utils/fetchToken';
+import { api } from '../../../../backend/main';
 
 export const handler = async ( req: express.Request, res: express.Response ) => {
   
@@ -14,7 +15,17 @@ export const handler = async ( req: express.Request, res: express.Response ) => 
   // console.log(username, password)
   const { username, password } = req?.body
 
-  const user = await ap
+  const credentials = {
+    client_id: process.env.CLIENT_ID!,
+    client_secret: process.env.CLIENT_SECRET!
+}
+  const data = {
+    username, password, client_credentials: credentials
+  }
 
-  return newCookieToken.status(200).json({ token })
+  const user = await api.signIn(data)
+
+  console.log({ user })
+ 
+  return res.status(200).json({ data: 'Login successful' })
 }

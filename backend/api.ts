@@ -1,7 +1,8 @@
 import { CRUD } from "./CRUD";
 import { Post } from "./db/models/Post.model";
-import { User } from "./db/models/User.model";
-import { IClientCredentials, UserCall } from "./typings";
+import generateToken from "./lib/generateToken";
+import writeToken from "./lib/writeToken";
+import { IClientCredentials, IToken, UserCall } from "./typings";
 import fs from 'fs'
 
 export class API {
@@ -34,19 +35,6 @@ export class API {
         return true
     }
 
-    getAccessToken(credentials: IClientCredentials) {
-        const { client_id, client_secret } = credentials
-        if(
-            client_id !== process.env.CLIENT_ID &&
-            client_secret !== process.env.CLIENT_SECRET
-        ) return { 
-            ok: false,
-            status: 404 
-        }
-
-        const token = generateToken()
-        
-    }
     
     async getUser(data: { 
         username:string, 
@@ -60,6 +48,8 @@ export class API {
         }
 
         const user = await this.crud.getUser(username, this.secret)
+
+        delete user.user?.password
 
         return user
      }
@@ -81,6 +71,36 @@ export class API {
         const newUser = await this.crud.createUser(username, password, this.secret )
 
        return newUser
+    }
+
+    async signIn(data: {
+        username: string,
+        password: string,
+        client_credentials: IClientCredentials
+    }):Promise<IToken> {
+        const { username, password, client_credentials } = data
+
+        if(!this.validateClientCredentials(client_credentials)) return { ok: false, status: 401 }
+        
+        const { user } = await this.crud.getUser(username, this.secret)
+
+        if(
+            password === user?.password &&
+            username === user.username
+        ) {
+
+            delete user?.password
+            
+            const access_token = generateToken()
+
+            const token = writeToken(access_token, user)
+
+            return token
+            
+        }
+        
+        return { ok: false, status: 401 }
+        
     }
 
     getPost():Post { return 0 }

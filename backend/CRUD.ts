@@ -18,6 +18,7 @@ export class CRUD {
 
     private validateSecret(secret: string) { return secret === this.secret ? true : false }
 
+
     async getUser(username:string, secret:string ):Promise<UserCall> { 
 
         if(!this.validateSecret(secret)) return { status: 401, ok: false }
@@ -26,7 +27,8 @@ export class CRUD {
         try {
             const userFilePath = this.dbPath + '/entries/users/' + username + '.json'
 
-            const user = fs.readFileSync(userFilePath, 'utf-8');
+            const json = fs.readFileSync(userFilePath, 'utf-8');
+            const user = JSON.parse(json)
             
             return {
                 user,

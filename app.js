@@ -27,12 +27,12 @@ app.use(express_1.default.static(path_1.default.join(cwd, 'src/static')));
 app.use(body_parser_1.default.urlencoded());
 app.use(body_parser_1.default.json());
 app.use((0, cookie_parser_1.default)());
-app.use(middleware_1.default);
 //intercepts requests from http://localhost:3000/api/*
 app.post('/api/auth/*', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const response = yield (0, serveApiCall_1.default)(req, res);
     response;
 }));
+app.use(middleware_1.default);
 //intercepts routes
 app.get('*', (req, res) => {
     (0, serveStaticFiles_1.default)(req, res);

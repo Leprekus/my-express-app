@@ -40,8 +40,11 @@
                     password: '123abc'
                 })
             })
-            const data = await  login.json()
-            console.log({ data })
+            const { data } = await  login.json()
+            console.log(data)
+            console.log(data.ok)
+            if(data.ok) window.location.href = '/'
+            
         }
     </script>
     <form class="flex flex-col w-96 h-96 mx-auto gap-2 ">

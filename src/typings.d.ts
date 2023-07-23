@@ -9,3 +9,7 @@ export interface ICookieToken extends IResponse {
     created_at: number,
     user: { username: string },
   }
+
+  export interface ClientToken extends ICookieToken {
+    expires_at:  number
+  }

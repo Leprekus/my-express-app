@@ -1,5 +1,5 @@
 import express from 'express'
-import getUser from './src/lib/getUser'
+import { ClientToken,  } from './src/typings'
 
 const route = {
     exclude: ['/api', ],
@@ -12,13 +12,15 @@ export default async function middleware( req: express.Request, res: express.Res
 
     if(route.exclude.some(path => path === pathname)) return next()
     
-    const user =  getUser()
+    const token:ClientToken =  req.cookies?.token
     
-    if(!user && route.protect.some(path => path === pathname)) {
+    if((!token || token?.expires_at < Date.now()) && route.protect.some(path => path === pathname)) {
 
        return res.redirect('/login')
 
     }
+
+
 
     return next()
 }

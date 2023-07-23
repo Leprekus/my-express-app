@@ -15,20 +15,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.handler = void 0;
 const fetchToken_1 = __importDefault(require("../../../utils/fetchToken"));
 const handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // const cookieToken = req.cookies?.token
-    // if(req.cookies?.token) return res.status(200).json({ token: cookieToken })
     var _a;
-    // const token = await fetchToken()
-    // const newCookieToken = res.cookie('token',token, { maxAge: 900000, httpOnly: true });
-    // const { username, password } = req?.body
-    // console.log(username, password)
     const { username, password } = req === null || req === void 0 ? void 0 : req.body;
+    const HOUR_IN_MILISECONDS = 3000000;
     const cookieToken = ((_a = req.cookies) === null || _a === void 0 ? void 0 : _a.token) || null;
-    if (!cookieToken) {
-        const token = yield (0, fetchToken_1.default)(username, password);
-        res.cookie('token', token, { maxAge: 900000, httpOnly: true });
+    let token = null;
+    if (!cookieToken)
+        token = yield (0, fetchToken_1.default)(username, password);
+    else {
+        token = cookieToken;
     }
-    return cookieToken.ok ? res.redirect('/home') :
-        res.status(cookieToken.status).json({ data: 'Failed to retrieve token' });
+    if (!token.ok)
+        return res.status(token.status).json({ data: 'Failed to fetch token' });
+    token = Object.assign(Object.assign({}, token), { expires_at: token.created_at + HOUR_IN_MILISECONDS });
+    res.cookie('token', token, { maxAge: 900000, httpOnly: true });
+    return res.status(200).json({ data: token });
 });
 exports.handler = handler;

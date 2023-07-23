@@ -19,8 +19,8 @@ function fetchToken(username, password) {
         const data = {
             username, password, client_credentials: credentials
         };
-        const user = yield main_1.api.signIn(data);
-        return user;
+        const token = yield main_1.api.signIn(data);
+        return token;
     });
 }
 exports.default = fetchToken;

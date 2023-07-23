@@ -20,7 +20,6 @@ app.use(bodyParser.json())
 
 app.use(cookieParser())
 
-app.use(middleware)
 
 //intercepts requests from http://localhost:3000/api/*
 app.post('/api/auth/*',  async (req: express.Request, res: express.Response) => {
@@ -29,6 +28,8 @@ app.post('/api/auth/*',  async (req: express.Request, res: express.Response) => 
     
     response
 })
+
+app.use(middleware)
 
 //intercepts routes
 app.get('*', (req: express.Request, res: express.Response) => {

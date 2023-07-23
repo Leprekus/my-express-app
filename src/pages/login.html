@@ -37,7 +37,7 @@
                 headers:{ 'content-type': 'application/json' },
                 body: JSON.stringify({
                     username: 'john',
-                    password: '123abc el kks'
+                    password: '123abc'
                 })
             })
             const data = await  login.json()
@@ -45,14 +45,15 @@
         }
     </script>
     <form class="flex flex-col w-96 h-96 mx-auto gap-2 ">
-        <input type="text" placeholder="email or username">
-        <input type="text" placeholder="password">
+        <input required type="text" pattern="^[a-zA-Z0-9_]+$" placeholder="username">
+        <input required type="text" placeholder="password">
         <button onclick="login(event)">Login</button>
     </form>
-
+    
     <form class="flex flex-col w-96 h-96 mx-auto gap-2 ">
-        <input type="text" placeholder="email or username">
-        <input type="text" placeholder="password">
+        <input required type="text" pattern="^[a-zA-Z0-9_]+$" placeholder="username">
+        <input required type="email" placeholder="email">
+        <input required type="text" placeholder="password">
         <button onclick="signup(event)">Signup</button>
     </form>
 </body>

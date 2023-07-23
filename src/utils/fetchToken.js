@@ -12,14 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 function fetchToken() {
     return __awaiter(this, void 0, void 0, function* () {
         const options = {
-            method: 'POST',
-            url: 'https://{yourDomain}/oauth/token',
-            headers: { 'content-type': 'application/x-www-form-urlencoded' },
-            data: new URLSearchParams({
-                grant_type: 'client_credentials',
-                client_id: process.env.CLIENT_ID,
-                client_secret: process.env.CLIENT_SECRET,
-            })
+            client_id: process.env.CLIENT_ID,
+            client_secret: process.env.CLIENT_SECRET,
         };
         return options;
     });

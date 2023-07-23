@@ -1,6 +1,7 @@
 export interface UserCall {
     user?: User;
-    ok: 401 | 500 | 200 | 404;
+    ok: boolean;
+    status: 401 | 500 | 200 | 404;
 }
 
 export interface ErrnoException extends Error {
@@ -9,3 +10,8 @@ export interface ErrnoException extends Error {
     path?: string | undefined;
     syscall?: string | undefined;
  }
+
+ export interface IClientCredentials{
+    client_id: string,
+    client_secret: string
+} 

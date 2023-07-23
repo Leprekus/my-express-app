@@ -13,8 +13,13 @@ exports.handler = void 0;
 const main_1 = require("../../../../backend/main");
 const handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password } = req === null || req === void 0 ? void 0 : req.body;
-    const user = yield main_1.api.getUser({ username, token: 'my_access_token' });
-    switch (user.ok) {
+    const credentials = {
+        client_id: process.env.CLIENT_ID,
+        client_secret: process.env.CLIENT_SECRET
+    };
+    const user = yield main_1.api.getUser({ username, client_credentials: credentials });
+    console.log({ status: user.status });
+    switch (user.status) {
         case 200:
             return res.status(409).json({ data: 'User already exists' });
         case 500:
@@ -23,7 +28,7 @@ const handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = {
         username,
         password,
-        token: 'my_access_token'
+        client_credentials: credentials
     };
     const newUser = yield main_1.api.createUser(data);
     if (!newUser.ok)

@@ -24,24 +24,27 @@ class CRUD {
     getUser(username, secret) {
         return __awaiter(this, void 0, void 0, function* () {
             if (!this.validateSecret(secret))
-                return { ok: 401 };
+                return { status: 401, ok: false };
             /////
             try {
                 const userFilePath = this.dbPath + '/entries/users/' + username + '.json';
                 const user = fs_1.default.readFileSync(userFilePath, 'utf-8');
                 return {
                     user,
-                    ok: 200,
+                    status: 200,
+                    ok: true
                 };
             }
             catch (err) {
                 if (err.code === 'ENOENT')
                     return {
-                        ok: 404
+                        status: 404,
+                        ok: false
                     };
                 else
                     return {
-                        ok: 500
+                        status: 500,
+                        ok: false
                     };
             }
             ////
@@ -50,7 +53,7 @@ class CRUD {
     createUser(username, password, secret) {
         return __awaiter(this, void 0, void 0, function* () {
             if (!this.validateSecret(secret))
-                return { ok: 401 };
+                return { status: 401, ok: false };
             ////
             try {
                 const userFilePath = this.dbPath + '/entries/users/' + username + '.json';
@@ -58,12 +61,14 @@ class CRUD {
                 //returns undefined
                 fs_1.default.writeFileSync(userFilePath, data, 'utf-8');
                 return {
-                    ok: 200,
+                    status: 200,
+                    ok: false
                 };
             }
             catch (err) {
                 return {
-                    ok: 500
+                    status: 500,
+                    ok: false
                 };
             }
             ////

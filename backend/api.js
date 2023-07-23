@@ -20,20 +20,43 @@ class API {
     validateToken(token) {
         return token === 'my_access_token' ? true : false;
     }
+    validateClientCredentials(credentials) {
+        const { client_id, client_secret } = credentials;
+        if (client_id !== process.env.CLIENT_ID &&
+            client_secret !== process.env.CLIENT_SECRET)
+            return false;
+        return true;
+    }
+    getAccessToken(credentials) {
+        const { client_id, client_secret } = credentials;
+        if (client_id !== process.env.CLIENT_ID &&
+            client_secret !== process.env.CLIENT_SECRET)
+            return {
+                ok: false,
+                status: 404
+            };
+        const token = generateToken();
+    }
     getUser(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { username, token } = data;
-            if (!this.validateToken(token))
-                return { ok: 401 };
+            const { username, client_credentials } = data;
+            if (!this.validateClientCredentials(client_credentials))
+                return {
+                    ok: false,
+                    status: 401
+                };
             const user = yield this.crud.getUser(username, this.secret);
             return user;
         });
     }
     createUser(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { username, password, token } = data;
-            if (!this.validateToken(token)) {
-                return { ok: 401 };
+            const { username, password, client_credentials } = data;
+            if (!this.validateClientCredentials(client_credentials)) {
+                return {
+                    ok: false,
+                    status: 401
+                };
             }
             const newUser = yield this.crud.createUser(username, password, this.secret);
             return newUser;

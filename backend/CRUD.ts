@@ -20,7 +20,7 @@ export class CRUD {
 
     async getUser(username:string, secret:string ):Promise<UserCall> { 
 
-        if(!this.validateSecret(secret)) return { ok: 401 }
+        if(!this.validateSecret(secret)) return { status: 401, ok: false }
 
         /////
         try {
@@ -30,19 +30,22 @@ export class CRUD {
             
             return {
                 user,
-                ok: 200,
+                status: 200,
+                ok: true
             }
         
           } catch (err: any) {
 
             if (err.code === 'ENOENT') 
                 return {
-                ok: 404
+                status: 404,
+                ok: false
                 }
 
             else 
                 return {
-                    ok: 500
+                    status: 500,
+                    ok: false
                 }
           }
         ////
@@ -50,7 +53,7 @@ export class CRUD {
 
     async createUser (username: string, password: string, secret: string):Promise<UserCall> {
 
-        if(!this.validateSecret(secret)) return { ok: 401 }
+        if(!this.validateSecret(secret)) return { status: 401, ok: false }
 
         ////
         try {
@@ -62,13 +65,15 @@ export class CRUD {
             fs.writeFileSync(userFilePath, data, 'utf-8');
             
             return {
-                ok: 200,
+                status: 200,
+                ok: false
             }
         
           } catch (err: any) {
 
             return {
-                ok: 500
+                status: 500,
+                ok: false
             }
           }
         ////

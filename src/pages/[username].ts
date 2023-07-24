@@ -42,8 +42,6 @@ class Login {
   }
   
   // Instantiate the Login class and render it in the specified container element
-  console.log('success')
-  if(window !== undefined) {
-      const loginComponent = new Login();
-  }
+  const loginComponent = new Login();
+  
   

@@ -17,7 +17,7 @@ const fetchToken_1 = __importDefault(require("../../../utils/fetchToken"));
 const handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const { username, password } = req === null || req === void 0 ? void 0 : req.body;
-    const HOUR_IN_MILISECONDS = 3000000;
+    const HOUR_IN_MILISECONDS = 60 * 60 * 1000;
     const cookieToken = ((_a = req.cookies) === null || _a === void 0 ? void 0 : _a.token) || null;
     let token = null;
     if (!cookieToken)

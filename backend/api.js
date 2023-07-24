@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.API = void 0;
 const CRUD_1 = require("./CRUD");
+const deleteToken_1 = __importDefault(require("./lib/deleteToken"));
 const generateToken_1 = __importDefault(require("./lib/generateToken"));
 const writeToken_1 = __importDefault(require("./lib/writeToken"));
 class API {
@@ -31,6 +32,16 @@ class API {
             client_secret !== process.env.CLIENT_SECRET)
             return false;
         return true;
+    }
+    refreshToken(client_credentials, token) {
+        if (!this.validateClientCredentials(client_credentials))
+            return { ok: false, status: 401 };
+        const removedToken = (0, deleteToken_1.default)(token.access_token);
+        if (!removedToken)
+            return { ok: false, status: 500 };
+        const newAccessToken = (0, generateToken_1.default)();
+        const newToken = (0, writeToken_1.default)(newAccessToken, token.user);
+        return newToken;
     }
     getUser(data) {
         var _a;

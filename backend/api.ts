@@ -1,5 +1,6 @@
 import { CRUD } from "./CRUD";
 import { Post } from "./db/models/Post.model";
+import deleteToken from "./lib/deleteToken";
 import generateToken from "./lib/generateToken";
 import writeToken from "./lib/writeToken";
 import { IClientCredentials, IToken, UserCall } from "./typings";
@@ -25,7 +26,7 @@ export class API {
         return token === 'my_access_token' ? true : false
      }
     
-    private validateClientCredentials(credentials: { client_id: string, client_secret: string}) {
+    private validateClientCredentials(credentials: IClientCredentials) {
         const { client_id, client_secret} = credentials
         if(
             client_id !== process.env.CLIENT_ID &&
@@ -35,6 +36,20 @@ export class API {
         return true
     }
 
+     refreshToken(client_credentials: IClientCredentials, token: IToken):IToken {
+        if(!this.validateClientCredentials(client_credentials)) return { ok: false, status: 401 }
+        
+        const removedToken = deleteToken(token.access_token!)
+
+        if(!removedToken) return { ok: false, status: 500 }
+        
+        const newAccessToken = generateToken()
+
+        const newToken = writeToken(newAccessToken, token.user!)
+
+        return newToken
+
+    }
     
     async getUser(data: { 
         username:string, 

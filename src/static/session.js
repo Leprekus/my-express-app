@@ -8,9 +8,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const session = () => __awaiter(void 0, void 0, void 0, function* () {
-    const res = yield fetch('/api/session');
-    const data = res.json();
-    console.log(res);
+    const res = yield fetch('/api/auth/session', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+            username: 'john',
+            password: '123abc'
+        })
+    });
+    const data = yield res.json();
+    console.log({ scriptSide: data });
+    return data;
 });
-session();
+exports.default = session;

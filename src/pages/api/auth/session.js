@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.handler = void 0;
 const handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
-    console.log('ranrarn');
     const cookieToken = ((_a = req.cookies) === null || _a === void 0 ? void 0 : _a.token) || null;
     let token = null;
     //   if(!cookieToken) 
@@ -25,6 +24,6 @@ const handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     //     ...token,
     //     expires_at: token.created_at! + HOUR_IN_MILISECONDS
     //   } as ClientToken)
-    return res.status(200).json({ data: 'cookieToken' });
+    return res.status(200).json({ data: cookieToken });
 });
 exports.handler = handler;

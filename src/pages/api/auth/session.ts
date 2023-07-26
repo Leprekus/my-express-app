@@ -4,7 +4,7 @@ import { api } from '../../../../backend/main';
 import { ClientToken, ICookieToken } from '../../../typings';
 
 export const handler = async ( req: express.Request, res: express.Response ) => {
-    console.log('ranrarn')
+
   const cookieToken:ClientToken = req.cookies?.token || null
   
   let token = null
@@ -23,6 +23,6 @@ export const handler = async ( req: express.Request, res: express.Response ) => 
 //     expires_at: token.created_at! + HOUR_IN_MILISECONDS
 //   } as ClientToken)
 
-  return res.status(200).json({ data: 'cookieToken' })
+  return res.status(200).json({ data: cookieToken })
   
 }

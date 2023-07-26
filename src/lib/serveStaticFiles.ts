@@ -25,8 +25,7 @@ export default function serveStaticFiles ( req: express.Request, res: express.Re
       }
     });
   } else if(req.path) {
-    console.log('i shouldnt appear', { request: req.path})
-    
+
     const pattern = /\[[^\]]+]\.js/;
 
     const splitPath = req.path.split('/')

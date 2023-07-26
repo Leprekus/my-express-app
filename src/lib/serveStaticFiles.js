@@ -26,7 +26,6 @@ function serveStaticFiles(req, res) {
         });
     }
     else if (req.path) {
-        console.log('i shouldnt appear', { request: req.path });
         const pattern = /\[[^\]]+]\.js/;
         const splitPath = req.path.split('/');
         // Calculate the depth of the directory and construct the file path

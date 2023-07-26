@@ -20,6 +20,15 @@ nav {
     display: flex;
 }
 
+form {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(206, 206, 206);
+  width: fit-content;
+  padding: 2rem;
+}
+
 .desktop-nav {
     position: absolute;
     height: 100%;

@@ -59,4 +59,43 @@ const Navbar = (targetElementId="root") => {
 };
 
 // Call the Navbar function with the target element ID 'root'
-//Navbar('root');
+interface IElement {
+    element: string,
+    class?: string,
+    text?: string,
+    attributes?: {key: string, value: string}[],
+    children: IElement[]
+}
+class Component {
+
+    //container: HTMLElement;
+    children : IElement[];
+
+    constructor(elements:IElement[], ) {
+        //this.container = element;
+        this.children = elements
+    }
+    customizeNode(node:HTMLElement, child:IElement) {
+        //class
+        node.className = child.class ?? ''
+        //text
+        node.textContent = child?.text ?? ''
+        //attributes
+        child?.attributes?.map(attribute => node.setAttribute(attribute.key, attribute.value))
+        //children
+        child?.children && new Component(child.children)
+    }
+    render() {
+        const targetElement = document.getElementById("root");
+
+        const createdChildren = this.children.map(child => {
+            const node = document.createElement(child.element)
+            this.customizeNode(node, child)
+
+            return node
+        })
+        createdChildren.map(child => 
+            targetElement?.appendChild(child))
+    //targetElement && targetElement.appendChild(this.container);
+    }
+}

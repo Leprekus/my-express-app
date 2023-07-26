@@ -40,7 +40,7 @@ export class API {
         if(!this.validateClientCredentials(client_credentials)) return { ok: false, status: 401 }
         
         const removedToken = deleteToken(token.access_token!)
-
+        
         if(!removedToken) return { ok: false, status: 500 }
         
         const newAccessToken = generateToken()

@@ -14,21 +14,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handler = void 0;
 const fetchToken_1 = __importDefault(require("../../../utils/fetchToken"));
+const setToken_1 = __importDefault(require("../../../utils/setToken"));
 const handler = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     const { username, password } = req === null || req === void 0 ? void 0 : req.body;
-    const HOUR_IN_MILISECONDS = 60 * 60 * 1000;
     const cookieToken = ((_a = req.cookies) === null || _a === void 0 ? void 0 : _a.token) || null;
     let token = null;
     if (!cookieToken)
         token = yield (0, fetchToken_1.default)(username, password);
-    else {
+    else
         token = cookieToken;
-    }
     if (!token.ok)
         return res.status(token.status).json({ data: 'Failed to fetch token' });
-    token = Object.assign(Object.assign({}, token), { expires_at: token.created_at + HOUR_IN_MILISECONDS });
-    res.cookie('token', token, { maxAge: 900000, httpOnly: true });
+    token = (0, setToken_1.default)(token, res, req);
     return res.status(200).json({ data: token });
 });
 exports.handler = handler;

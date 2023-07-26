@@ -44,5 +44,30 @@ const Navbar = (targetElementId = "root") => {
     const targetElement = document.getElementById(targetElementId);
     targetElement && targetElement.appendChild(fragment);
 };
-// Call the Navbar function with the target element ID 'root'
-//Navbar('root');
+class Component {
+    constructor(elements) {
+        //this.container = element;
+        this.children = elements;
+    }
+    customizeNode(node, child) {
+        var _a, _b, _c;
+        //class
+        node.className = (_a = child.class) !== null && _a !== void 0 ? _a : '';
+        //text
+        node.textContent = (_b = child === null || child === void 0 ? void 0 : child.text) !== null && _b !== void 0 ? _b : '';
+        //attributes
+        (_c = child === null || child === void 0 ? void 0 : child.attributes) === null || _c === void 0 ? void 0 : _c.map(attribute => node.setAttribute(attribute.key, attribute.value));
+        //children
+        (child === null || child === void 0 ? void 0 : child.children) && new Component(child.children);
+    }
+    render() {
+        const targetElement = document.getElementById("root");
+        const createdChildren = this.children.map(child => {
+            const node = document.createElement(child.element);
+            this.customizeNode(node, child);
+            return node;
+        });
+        createdChildren.map(child => targetElement === null || targetElement === void 0 ? void 0 : targetElement.appendChild(child));
+        //targetElement && targetElement.appendChild(this.container);
+    }
+}

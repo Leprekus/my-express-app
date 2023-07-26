@@ -12,8 +12,9 @@ function createHTML(props) {
  <body>
  <h1>Hello World</h1>
  <div id="root"></div>
- <script src="/session.js"></script>
  <script id="entry-point">${props.script}</script>
+ <script>var exports = {};</script> 
+ <script src="/session.js" type="text/javascript"></script>
  </body>
  </html>`;
     const readableStream = new stream_1.Readable();

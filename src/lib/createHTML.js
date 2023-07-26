@@ -12,6 +12,7 @@ function createHTML(props) {
  <body>
  <h1>Hello World</h1>
  <div id="root"></div>
+ <script src="/session.js"></script>
  <script id="entry-point">${props.script}</script>
  </body>
  </html>`;

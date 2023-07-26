@@ -7,7 +7,7 @@ export const handler = async ( req: express.Request, res: express.Response ) => 
   
   const { username, password } = req?.body
 
-  const HOUR_IN_MILISECONDS =  60 * 60 * 1000
+  const HOUR_IN_MILISECONDS =  60 * 60 * 1000  
   
   const cookieToken:ClientToken = req.cookies?.token || null
   

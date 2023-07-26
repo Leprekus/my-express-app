@@ -15,6 +15,7 @@ export default function createHTML(props: Props) {
  <body>
  <h1>Hello World</h1>
  <div id="root"></div>
+ <script src="/session.js"></script>
  <script id="entry-point">${ props.script }</script>
  </body>
  </html>`

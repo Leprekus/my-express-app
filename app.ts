@@ -32,8 +32,12 @@ app.post('/api/auth/*',  async (req: express.Request, res: express.Response) => 
 app.use(middleware)
 
 //intercepts routes
-app.get('*', (req: express.Request, res: express.Response) => {
-    serveStaticFiles(req, res, )
+app.get('*', (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    if(req.path.includes('/api/')) {
+        next()
+    } else {
+        serveStaticFiles(req, res, )
+    }
 })
 
 app.listen(3000)

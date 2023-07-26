@@ -6,14 +6,15 @@ import createHTML from './createHTML';
 
 export default function serveStaticFiles ( req: express.Request, res: express.Response, ) {
   
-  const cwd = CWD + '/src/pages'
+  const PAGES_DIRECTORY = CWD + '/src/pages'
   let filePath = ''; 
   
-  if(req.path === '/') filePath = path.join(cwd, '/index.html') // Assuming the files are HTML
+  if(req.path === '/') filePath = path.join(PAGES_DIRECTORY, '/index.html') // Assuming the files are HTML
 
-  else filePath = path.join(cwd, req.path + '.html')
+  else filePath = path.join(PAGES_DIRECTORY, req.path + '.html')
  
-  if(fs.existsSync(filePath)) 
+  if(fs.existsSync(filePath)) {
+    
     fs.readFile(filePath, 'utf8', (err, data) => {
       if (err) {
         // If the file is not found or there's an error, send a fallback response
@@ -23,8 +24,9 @@ export default function serveStaticFiles ( req: express.Request, res: express.Re
         res.send(data);
       }
     });
-  else if(req.path) {
-
+  } else if(req.path) {
+    console.log('i shouldnt appear', { request: req.path})
+    
     const pattern = /\[[^\]]+]\.js/;
 
     const splitPath = req.path.split('/')
@@ -35,39 +37,39 @@ export default function serveStaticFiles ( req: express.Request, res: express.Re
     // with a '/' separator
     const reqPath = splitPath.length <= 2 ? '/' : splitPath.slice(0, splitPath.length - 1).join('/') + '/'
     
-    const pagesDir = path.join(CWD, 'src/pages/' + reqPath)
+    const FOLDER_PATH = path.join(CWD, 'src/pages/' + reqPath)
 
-    // try {
+    try {
 
-    //   const files = fs.readdirSync(pagesDir)
+      const FILES_IN_FOLDER = fs.readdirSync(FOLDER_PATH)
 
-    //   const matches =  files.filter((file) => pattern.test(file))
+      const matches =  FILES_IN_FOLDER.filter((file) => pattern.test(file))
   
-    //   if(matches.length === 0) res.status(404).send('404 Not Found');
-  
-    //   const fullFilePath = path.join(pagesDir, reqPath + matches[0])
+      if(matches.length === 0) res.status(404).send('404 Not Found');
       
-    //   fs.readFile(fullFilePath, 'utf8', (err, data) => {
-    //     if (err) {
-    //       // Handle the error if the file cannot be read
-    //       res.status(500).send('Internal Server Error')
-    //     } else {
-    //       // 'data' contains the contents of the file as a string
-    //       //console.log('File content:', data);
-    //       const entryPoint = createHTML({ script: data })
+      const DYNAMIC_FILEPATH = path.join(FOLDER_PATH, reqPath + matches[0])
+      
+      fs.readFile(DYNAMIC_FILEPATH, 'utf8', (err, data) => {
+        if (err) {
+          // Handle the error if the file cannot be read
+          res.status(500).send('Internal Server Error')
+        } else {
+          // 'data' contains the contents of the file as a string
+          //console.log('File content:', data);
+          const entryPoint = createHTML({ script: data })
         
-    //       res.setHeader('Content-Type', 'text/html')
+          res.setHeader('Content-Type', 'text/html')
     
-    //       entryPoint.pipe(res)
-    //     }
-    //   });
+          entryPoint.pipe(res)
+        }
+      });
       
 
-    // } catch(error) {
+    } catch(error) {
 
-    //   res.status(404).send('404 Not Found')
+      res.status(404).send('404 Not Found')
 
-    // }
+    }
 
 
   }

@@ -34,7 +34,12 @@ app.post('/api/auth/*', (req, res) => __awaiter(void 0, void 0, void 0, function
 }));
 app.use(middleware_1.default);
 //intercepts routes
-app.get('*', (req, res) => {
-    (0, serveStaticFiles_1.default)(req, res);
+app.get('*', (req, res, next) => {
+    if (req.path.includes('/api/')) {
+        next();
+    }
+    else {
+        (0, serveStaticFiles_1.default)(req, res);
+    }
 });
 app.listen(3000);

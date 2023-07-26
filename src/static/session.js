@@ -13,10 +13,6 @@ const session = () => __awaiter(void 0, void 0, void 0, function* () {
     const res = yield fetch('/api/auth/session', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({
-            username: 'john',
-            password: '123abc'
-        })
     });
     const data = yield res.json();
     console.log({ scriptSide: data });

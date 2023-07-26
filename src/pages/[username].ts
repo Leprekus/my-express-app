@@ -1,11 +1,11 @@
-import { Navbar } from "../components/Navbar";
+
 
 class Login {
     private container: HTMLElement;
     private usernameInput: HTMLInputElement;
     private passwordInput: HTMLInputElement;
     private loginButton: HTMLButtonElement;
-    private navbar: Function;
+    private navbar: any
   
     constructor() {
       // Get the container element where you want to render the login component
@@ -48,5 +48,7 @@ class Login {
   
   // Instantiate the Login class and render it in the specified container element
   const loginComponent = new Login();
+
+  
   
   

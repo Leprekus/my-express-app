@@ -15,37 +15,64 @@
     margin: 0;
   }
 
-.flex {
+nav { 
+    background-color: black;
     display: flex;
 }
 
-.flex-col {
+.desktop-nav {
+    position: absolute;
+    height: 100%;
+    width:200;
+    top: 0;
+    left: 0;
     flex-direction: column;
-}
-.gap-1 {
-    gap: 4px;
-}
-.gap-2 {
-    gap: 8px;
-}
-.gap-3 {
-    gap: 12px;
-}
-.gap-4 {
-    gap: 16px;
+    padding: 4rem;
 }
 
-.w-96 {
-    width: 394px;
+.mobile-nav {
+    position: absolute;
+    width: 100%;
+    padding: 1rem 2rem;
+    
 }
-.h-96 {
-    width: 394px;
+@media (min-width: 991px) {
+    /* Styles to apply when the screen width is 991px or less (md-sized screens) */
+    /* Add any properties you want to hide the element or set its display to none */
+    /* For example, to hide the element, you can use display: none */
+    /* or any other styles to make the element disappear */
+    .mobile-nav {
+      display: none;
+    
+    }
+}
+@media (max-width: 991px) {
+    /* Styles to apply when the screen width is 991px or less (md-sized screens) */
+    /* Add any properties you want to hide the element or set its display to none */
+    /* For example, to hide the element, you can use display: none */
+    /* or any other styles to make the element disappear */
+    .desktop-nav {
+      display: none;
+    
+    }
 }
 
-.mx-auto {
-    margin: 0 auto;
+.top {
+    top: 0;
+    left: 0;
+    justify-content: end;
 }
 
-.rounded-md {
-    border-radius: 7px;
+.bottom {
+    bottom: 0;
+    left: 0;
+    justify-content: space-between;
+}
+
+#root {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

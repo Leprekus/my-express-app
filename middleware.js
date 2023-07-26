@@ -21,7 +21,7 @@ function middleware(req, res, next) {
     var _a;
     return __awaiter(this, void 0, void 0, function* () {
         const pathname = req.path;
-        if (route.exclude.some(path => path === pathname) || pathname === '/login')
+        if (route.exclude.some(path => pathname.includes(path)) || pathname === '/login')
             return next();
         let token = (_a = req.cookies) === null || _a === void 0 ? void 0 : _a.token;
         if (token && (token === null || token === void 0 ? void 0 : token.expires_at) < Date.now()) {

@@ -11,7 +11,7 @@ export default async function middleware( req: express.Request, res: express.Res
 
     const pathname = req.path
 
-    if(route.exclude.some(path => path === pathname) || pathname === '/login' ) return next()
+    if(route.exclude.some(path => pathname.includes(path)) || pathname === '/login' ) return next()
     
     let token:ClientToken =  req.cookies?.token
 

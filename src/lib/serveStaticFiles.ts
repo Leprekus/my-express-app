@@ -37,37 +37,37 @@ export default function serveStaticFiles ( req: express.Request, res: express.Re
     
     const pagesDir = path.join(CWD, 'src/pages/' + reqPath)
 
-    try {
+    // try {
 
-      const files = fs.readdirSync(pagesDir)
+    //   const files = fs.readdirSync(pagesDir)
 
-      const matches =  files.filter((file) => pattern.test(file))
+    //   const matches =  files.filter((file) => pattern.test(file))
   
-      if(matches.length === 0) res.status(404).send('404 Not Found');
+    //   if(matches.length === 0) res.status(404).send('404 Not Found');
   
-      const fullFilePath = path.join(pagesDir, reqPath + matches[0])
+    //   const fullFilePath = path.join(pagesDir, reqPath + matches[0])
       
-      fs.readFile(fullFilePath, 'utf8', (err, data) => {
-        if (err) {
-          // Handle the error if the file cannot be read
-          res.status(500).send('Internal Server Error')
-        } else {
-          // 'data' contains the contents of the file as a string
-          //console.log('File content:', data);
-          const entryPoint = createHTML({ script: data })
+    //   fs.readFile(fullFilePath, 'utf8', (err, data) => {
+    //     if (err) {
+    //       // Handle the error if the file cannot be read
+    //       res.status(500).send('Internal Server Error')
+    //     } else {
+    //       // 'data' contains the contents of the file as a string
+    //       //console.log('File content:', data);
+    //       const entryPoint = createHTML({ script: data })
         
-          res.setHeader('Content-Type', 'text/html')
+    //       res.setHeader('Content-Type', 'text/html')
     
-          entryPoint.pipe(res)
-        }
-      });
+    //       entryPoint.pipe(res)
+    //     }
+    //   });
       
 
-    } catch(error) {
+    // } catch(error) {
 
-      res.status(404).send('404 Not Found')
+    //   res.status(404).send('404 Not Found')
 
-    }
+    // }
 
 
   }

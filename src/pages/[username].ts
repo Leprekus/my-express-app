@@ -1,8 +1,11 @@
+import { Navbar } from "../components/Navbar";
+
 class Login {
     private container: HTMLElement;
     private usernameInput: HTMLInputElement;
     private passwordInput: HTMLInputElement;
     private loginButton: HTMLButtonElement;
+    private navbar: Function;
   
     constructor() {
       // Get the container element where you want to render the login component
@@ -27,6 +30,8 @@ class Login {
       this.container.appendChild(this.usernameInput);
       this.container.appendChild(this.passwordInput);
       this.container.appendChild(this.loginButton);
+
+      this.navbar = Navbar()
     }
   
     handleLogin = () => {

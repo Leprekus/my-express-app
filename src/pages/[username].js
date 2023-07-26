@@ -1,4 +1,6 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const Navbar_1 = require("../components/Navbar");
 class Login {
     constructor() {
         this.handleLogin = () => {
@@ -28,6 +30,7 @@ class Login {
         this.container.appendChild(this.usernameInput);
         this.container.appendChild(this.passwordInput);
         this.container.appendChild(this.loginButton);
+        this.navbar = (0, Navbar_1.Navbar)();
     }
 }
 // Instantiate the Login class and render it in the specified container element
